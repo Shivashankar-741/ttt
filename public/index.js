@@ -2,7 +2,7 @@
 const playerX = [];
 const playerO = [];
 let currentPlayerX = true;
-const getElement = () => {
+const getCurrentPlayerElement = () => {
     if (currentPlayerX)
         return '<span class="item_symbol item_symbol_x">X</span>';
     return '<span class="item_symbol item_symbol_o">O</span>';
@@ -59,7 +59,7 @@ document.addEventListener("click", (e) => {
         const getGridCName = target.className.split(" ")[1];
         const getIndexOfGridItem = parseInt(getGridCName[getGridCName.length - 1]);
         const getGridItem = document.querySelector(`.grid_item_${getIndexOfGridItem}`);
-        getGridItem === null || getGridItem === void 0 ? void 0 : getGridItem.insertAdjacentHTML("beforeend", getElement());
+        getGridItem === null || getGridItem === void 0 ? void 0 : getGridItem.insertAdjacentHTML("beforeend", getCurrentPlayerElement());
         if (currentPlayerX)
             playerX.push(getIndexOfGridItem);
         else

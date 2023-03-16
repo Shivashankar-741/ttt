@@ -3,7 +3,7 @@ const playerO: number[] = [];
 
 let currentPlayerX = true;
 
-const getElement = () => {
+const getCurrentPlayerElement = () => {
 	if (currentPlayerX) return '<span class="item_symbol item_symbol_x">X</span>';
 	return '<span class="item_symbol item_symbol_o">O</span>';
 };
@@ -71,7 +71,7 @@ document.addEventListener("click", (e) => {
 		const getIndexOfGridItem = parseInt(getGridCName[getGridCName.length - 1]);
 
 		const getGridItem = document.querySelector(`.grid_item_${getIndexOfGridItem}`);
-		getGridItem?.insertAdjacentHTML("beforeend", getElement());
+		getGridItem?.insertAdjacentHTML("beforeend", getCurrentPlayerElement());
 
 		if (currentPlayerX) playerX.push(getIndexOfGridItem);
 		else playerO.push(getIndexOfGridItem);
