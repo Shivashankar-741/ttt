@@ -5,55 +5,46 @@ let currentPlayerX = true;
 
 const getCurrentPlayerElement = () => {
 	if (currentPlayerX) return '<span class="item_symbol item_symbol_x">X</span>';
-	return '<span class="item_symbol item_symbol_o">O</span>';
+	else return '<span class="item_symbol item_symbol_o">O</span>';
 };
 
-const checkWhoWon = (playerX: number[]) => {
-	// there can be only two ways when substracts, value should be 1 or 3
+const showGameStatus = (msg: string) => {
+	setTimeout(() => {
+		alert(msg);
+		window.location.reload();
+	}, 250);
+	return;
+};
 
-	let indices = [...playerX]; // [5, 6, 4]
-	indices = indices.sort((a, b) => a - b); //[4,5,6]
+const checkWhoWon = (chosenIndices: number[], player: string) => {
+	chosenIndices = chosenIndices.sort((a, b) => a - b);
 
-	let range = indices[1] - indices[0];
+	const successiveIndices = [
+		[1, 2, 3],
+		[4, 5, 6],
+		[7, 8, 9],
+		[1, 4, 7],
+		[2, 5, 8],
+		[3, 6, 9],
+	];
 
-	if ([1, 3].includes(range)) {
-		let playerWins = true;
-
-		for (let i = 1; i < indices.length; i++) {
-			if (indices[i] - range !== indices[i - 1]) {
-				playerWins = false;
-				break;
-			}
-		}
-
-		if (playerWins) {
-			setTimeout(() => {
-				alert(`${!currentPlayerX ? "X" : "O"} wins, Game Over`);
-				window.location.reload();
-			}, 500);
-			return;
+	for (let i = 0; i < successiveIndices.length; i++) {
+		for (let j = 0; j < successiveIndices[j].length; j++) {
+			if (chosenIndices.includes(successiveIndices[i][j]) && j === 2) showGameStatus(`${player} wins the game`);
+			else if (!chosenIndices.includes(successiveIndices[i][j])) break;
 		}
 	}
 };
 
 const isGameOver = (playerX: number[], playerO: number[]) => {
-	if (currentPlayerX && playerX.length >= 3) {
-		//when playerX wins
-		checkWhoWon(playerX);
-	}
+	//when playerX wins
+	if (currentPlayerX && playerX.length >= 3) checkWhoWon(playerX, "X");
 
-	if (!currentPlayerX && playerO.length >= 3) {
-		// when playerO wins
-		checkWhoWon(playerO);
-	}
+	// when playerO wins
+	if (!currentPlayerX && playerO.length >= 3) checkWhoWon(playerO, "O");
 
-	if (playerX.length + playerO.length === 9) {
-		setTimeout(() => {
-			alert("Game Over");
-			window.location.reload();
-		}, 1000);
-		return;
-	}
+	if (playerX.length + playerO.length === 9) showGameStatus("Game Over");
+
 	currentPlayerX = !currentPlayerX;
 };
 
@@ -62,9 +53,8 @@ document.addEventListener("click", (e) => {
 
 	//if user clicked on grid box or already occupied boxes
 	if (target?.className.startsWith("grid_item") || target?.className === "item_symbol") {
-		
 		// if user clicked on already occupied boxes
-		if (target?.className === "item_symbol" || !!target?.children?.length) return
+		if (target?.className === "item_symbol" || !!target?.children?.length) return;
 
 		const getGridCName = target.className.split(" ")[1];
 		const getIndexOfGridItem = parseInt(getGridCName[getGridCName.length - 1]);
