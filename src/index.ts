@@ -62,10 +62,9 @@ document.addEventListener("click", (e) => {
 
 	//if user clicked on grid box or already occupied boxes
 	if (target?.className.startsWith("grid_item") || target?.className === "item_symbol") {
+		
 		// if user clicked on already occupied boxes
-		if (target?.className === "item_symbol" || !!target?.children?.length) {
-			return;
-		}
+		if (target?.className === "item_symbol" || !!target?.children?.length) return
 
 		const getGridCName = target.className.split(" ")[1];
 		const getIndexOfGridItem = parseInt(getGridCName[getGridCName.length - 1]);

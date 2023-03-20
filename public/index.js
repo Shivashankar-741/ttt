@@ -53,9 +53,8 @@ document.addEventListener("click", (e) => {
     //if user clicked on grid box or already occupied boxes
     if ((target === null || target === void 0 ? void 0 : target.className.startsWith("grid_item")) || (target === null || target === void 0 ? void 0 : target.className) === "item_symbol") {
         // if user clicked on already occupied boxes
-        if ((target === null || target === void 0 ? void 0 : target.className) === "item_symbol" || !!((_a = target === null || target === void 0 ? void 0 : target.children) === null || _a === void 0 ? void 0 : _a.length)) {
+        if ((target === null || target === void 0 ? void 0 : target.className) === "item_symbol" || !!((_a = target === null || target === void 0 ? void 0 : target.children) === null || _a === void 0 ? void 0 : _a.length))
             return;
-        }
         const getGridCName = target.className.split(" ")[1];
         const getIndexOfGridItem = parseInt(getGridCName[getGridCName.length - 1]);
         const getGridItem = document.querySelector(`.grid_item_${getIndexOfGridItem}`);
